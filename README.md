@@ -16,7 +16,7 @@ func()
 **my_module**
 
 ```
-module() -- register as module
+module() -- register module
 
 function func()
   print 'Hello from my_module'
