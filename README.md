@@ -1,7 +1,7 @@
 #Usage
 
 
-##init.lua
+__init.lua
 ```
 require 'module'
 
@@ -10,7 +10,7 @@ import 'my_module'
 func()
 ```
 
-##my_module
+__my_module
 
 ```
 module()
