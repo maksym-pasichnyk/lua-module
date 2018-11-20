@@ -6,6 +6,7 @@
 require 'module'
 
 import 'my_module'
+local func = import('my_module', true).func --equivalent
 
 func()
 ```
