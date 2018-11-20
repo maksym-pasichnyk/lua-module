@@ -2,10 +2,10 @@ _G.modules = {}
 _G.module = function()
     local file = debug.getinfo(2,'S').short_src
     assert(_G.modules[file] == nil, 'module \''..file..'\' is already exist')
-    local module = {}
+
     local L = {}
 
-    setmetatable(module, { 
+    local module = setmetatable({}, { 
         __index = function(self, k)
             if k == '_L' then
                 return L
@@ -19,7 +19,7 @@ _G.module = function()
     _G.modules[file] = module
 end
 
-_G.import = function(name, env)
+_G.import = function(name, packed)
     local module = _G.modules[name..'.lua']
     
     if not module then
@@ -31,7 +31,7 @@ _G.import = function(name, env)
         assert(module, 'module \''..name..'\' not found')
     end
 
-    env = env or getfenv(2)._L
+    local env = packed and {} or getfenv(2)._L
     for k, v in pairs(module) do
         env[k] = v
     end
