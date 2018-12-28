@@ -12,7 +12,7 @@ local lib = module.load('my_module')
 lib.func()
 ```
 
-**my_module**
+**my_module.lua**
 
 ```
 function func()
