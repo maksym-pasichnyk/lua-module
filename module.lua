@@ -1,19 +1,10 @@
 local module = {}
 function module.new()
-    local _L = {}
-
-    local function get(self, key)
-        if key == '_L' then
-            return _L
+    return setmetatable({ _L = {} }, { 
+        __index = function(self, key)
+            return self._L[key] or _G[key]
         end
-        return _L[key] or _G[key]
-    end
-
-    local function set(self, key, value)
-        _L[key] = value
-    end
-
-    return setmetatable({}, { __index = get, __newindex = set })
+    })
 end
 
 local modules = {}
@@ -27,15 +18,16 @@ function module.load(path, L)
     end
 
     L = L or {}
-    for k, v in pairs(env._L) do
+    for k, v in pairs(env) do
         L[k] = v
     end
+
     return L
 end
 
 _G.module = module
 _G.import = function(path)
-    module.load(path, getfenv(2)._L)
+    module.load(path,  getfenv(2)._L)
 end
 _G.export = function(name, value)
     _G[name] = value or getfenv(2)[name]
